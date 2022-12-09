@@ -1,0 +1,75 @@
+{% extends 'header.html' %}
+{% load static %}
+{% block content %}
+<!DOCTYPE html>
+<html lang="zxx" class="no-js">
+
+<head>
+    
+</head>
+
+<body>
+
+<br><br><br><br><br><br><br><br><br><br>
+    <!-- start product Area -->
+    
+        <!-- single product slide -->
+        <div class="single-product-slider">
+            <div class="container">
+                <div class="row justify-content-center">
+                    <div class="col-lg-6 text-center">
+                        <div class="section-title">
+                            <h1>My Cart</h1>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <!-- single product -->
+                    {% for i in cart %}
+                    <div class="col-lg-3 col-md-6">
+                        <div class="single-product">
+                            <a href="{% url 'product_detail' pk=i.product.pk %}">
+                                <img class="img-fluid" src="{{i.product.product_image.url}}" alt="" style="width:200px;height: 200px;"></a>
+                                <div class="product-details">
+                                    <h6>Company :{{i.product.product_company}}</h6>
+                                    <div class="model">
+                                        <h6>Name :{{i.product.product_name }}</h6>
+                                    </div>
+                                    <div class="price">
+                                        <h6>RS :{{ i.product.product_price }}</h6>
+                                    </div>
+                                    <div class="size">
+                                        <h6>Size :{{ i.product.product_size }}</h6>
+                                    </div>
+                                     <div class="size">
+                                        <form method="post" action="{% url 'change_qty' pk=i.pk %}" >
+                                            {% csrf_token %}
+                                            Quantity :<input type="number" name="product_qty" value="{{i.product_qty}}" min="1" max="10" onchange="this.form.submit();">
+                                        </form>
+                                    </div>
+                                    <div class="price">
+                                        <h6>Price :{{ i.total_price }}</h6>
+                                    </div>
+                                </div>
+                          
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- end product Area -->
+    <h1>Net Price:{{net_price}}</h1>
+    <form method="post" action="{% url 'pay' %}">
+        {% csrf_token %}
+        <input type="hidden" name="amount" value="{{net_price}}">
+        <input type="submit" value="Proceed for Payment " class="btn btn-primary">
+    </form>
+
+
+    
+</body>
+
+</html>
+{% endblock %}

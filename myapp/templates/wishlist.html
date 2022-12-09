@@ -1,0 +1,63 @@
+{% extends 'header.html' %}
+{% load static %}
+{% block content %}
+<!DOCTYPE html>
+<html lang="zxx" class="no-js">
+
+<head>
+	
+</head>
+
+<body>
+
+<br><br><br><br><br><br><br><br><br><br>
+	<!-- start product Area -->
+	
+		<!-- single product slide -->
+		<div class="single-product-slider">
+			<div class="container">
+				<div class="row justify-content-center">
+					<div class="col-lg-6 text-center">
+						<div class="section-title">
+							<h1>My Wishlist</h1>
+						</div>
+					</div>
+				</div>
+				<div class="row">
+					<!-- single product -->
+					{% for i in wishlist %}
+					<div class="col-lg-3 col-md-6">
+						<div class="single-product">
+							<a href="{% url 'product_detail' pk=i.product.pk %}">
+								<img class="img-fluid" src="{{i.product.product_image.url}}" alt="" style="width:200px;height: 200px;">
+								<div class="product-details">
+									<h6>Company :{{i.product.product_company}}</h6>
+									<div class="model">
+										<h6>Name :{{i.product.product_name }}</h6>
+									</div>
+									<div class="price">
+										<h6>RS :{{ i.product.product_price }}</h6>
+									</div>
+									<div class="size">
+										<h6>Size :{{ i.product.product_size }}</h6>
+									</div>
+									<div class="prd-bottom">
+									</div>
+								</div>
+							</a>
+						</div>
+					</div>
+					{% endfor %}
+				</div>
+			</div>
+		</div>
+	</section>
+	<!-- end product Area -->
+
+
+
+	
+</body>
+
+</html>
+{% endblock %}
